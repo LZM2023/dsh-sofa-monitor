@@ -1,0 +1,60 @@
+name: check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 只做语法解析，不安装依赖、不执行任何插件模块
+      - name: Syntax check
+        run: node scripts/check-syntax.mjs
+
+  leak-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 防止密钥与采集数据被误提交
+      - name: Guard against committed secrets and runtime data
+        run: |
+          set -e
+          fail=0
+
+          if git ls-files | grep -Ei '(^|/)(qwen-private|image-processing-private)\.json$|(^|/)\.env(\..*)?$|(^|/)[^/]*-private\.json$'; then
+            echo "::error::检测到密钥类文件被提交"
+            fail=1
+          fi
+
+          if git ls-files | grep -Ei '^(product-tasks|outputs|exports|node_modules)/|^collection-index\.json$'; then
+            echo "::error::检测到运行时采集数据被提交"
+            fail=1
+          fi
+
+          if git ls-files | grep -E '^assets/cards/|^work/'; then
+            echo "::error::检测到真实商品素材目录被提交"
+            fail=1
+          fi
+
+          # 仓库源码本身不含商品图；README 截图允许放 docs/screenshots/
+          if git ls-files | grep -Ei '\.(png|jpe?g|gif|avif|webp|bmp|tiff?|psd)$' | grep -v '^docs/screenshots/'; then
+            echo "::error::检测到二进制图片被提交（商品图请勿入库；README 截图放 docs/screenshots/）"
+            fail=1
+          fi
+
+          if git grep -nEI 'sk-[A-Za-z0-9]{20,}|AKID[A-Za-z0-9]{13,}|gh[pousr]_[A-Za-z0-9]{20,}' -- . ':(exclude).github/' ; then
+            echo "::error::检测到疑似凭据字符串"
+            fail=1
+          fi
+
+          exit $fail

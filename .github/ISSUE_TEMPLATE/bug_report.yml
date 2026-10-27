@@ -1,0 +1,168 @@
+name: 🐞 Bug 报告
+description: 采集失败、规格卡出错、装不上、连接不上助手。请先填「前置自检三关」，不填会被退回。
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 先过三关，再报 Bug
+
+        这个插件的依赖链是 **DSH → 浏览器桥 → 浏览器助手扩展 → 真实 Chrome/Edge 标签页**，任何一环缺失都会表现为「采集没反应」。
+        下面三关是**必填项**，请照实填写 —— 尤其不要自己改写成「已连接」「正常」，请贴工具返回的原文。
+
+        如果你还没看过 [前置要求](https://github.com/LZM2023/dsh-sofa-monitor#前置要求先看这个)，请先看一眼。
+
+  - type: dropdown
+    id: gate1_browser
+    attributes:
+      label: "关 1 · Chrome / Edge 是否存在"
+      description: '直接在 PowerShell 里跑：Test-Path "$env:ProgramFiles\Google\Chrome\Application\chrome.exe"（Edge 换成 ${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe）。两个都跑一遍。'
+      options:
+        - Chrome 存在
+        - Edge 存在
+        - Chrome 和 Edge 都存在
+        - 两个都找不到（True 都没返回）
+        - 装在非标准路径（便携版 / 改过安装位置）
+    validations:
+      required: true
+
+  - type: input
+    id: gate2_bridge
+    attributes:
+      label: "关 2 · browser_use 返回的原文"
+      description: 在 DSH 里问一句「browser_use 现在连了几个浏览器？」，**把回答第一行原样贴在这里**，不要改写。
+      placeholder: "Connected browsers:  或者  No browser extension is connected to the bridge..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: gate3_desktop
+    attributes:
+      label: "关 3 · 桌面补救通道（computer-use）"
+      description: 在 DSH 里问一句「用 windows_computer_use 的 list_windows 看看有几个窗口」。这一关不影响能否采集，只影响失败后能不能补救。
+      options:
+        - 可用 —— list_windows 能列出窗口
+        - 不可用 —— 报工具不存在
+        - 未测试
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ## 环境
+
+  - type: input
+    id: plugin_version
+    attributes:
+      label: 插件版本
+      description: 面板左下角显示，形如 `沙发爬取 v0.1.50 已连接`。
+      placeholder: v0.1.50
+    validations:
+      required: true
+
+  - type: input
+    id: desktop_version
+    attributes:
+      label: DSH Desktop 版本
+      description: 窗口标题栏里显示，形如 `DSH Desktop v2.0.18-beta.1`。
+      placeholder: v2.0.18-beta.1
+    validations:
+      required: true
+
+  - type: input
+    id: dsh_version
+    attributes:
+      label: DSH 版本 / Node 版本
+      description: 在终端跑 `node --version`。
+      placeholder: "DSH 0.2.1-rc.2 / Node v24.18.0"
+    validations:
+      required: true
+
+  - type: input
+    id: os_version
+    attributes:
+      label: Windows 版本
+      placeholder: "Windows 11 26100"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ## 问题
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 发生了什么
+      description: 一两句话说清现象。例如「第二条第商品一直停在 reading 阶段，30 分钟后出了不完整卡片」。
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 越具体越好 —— 平台、沙发品牌、数量、整批分钟数、启动方式（直接交给右侧 Agent / 复制指令）。
+      placeholder: |
+        1. 面板里选 京东 / 品牌 xxx / 数量 2 / 整批 20 分钟
+        2. 点「检查并连接助手」，显示已连接
+        3. 点「按筛选条件搜索并采集」
+        4. 第 2 条卡在 xxx
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+    validations:
+      required: false
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果
+      description: 有截图更好，拖进输入框即可（注意遮挡真实商品图和品牌名）。
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志 / 报错原文
+      description: 优先贴**工具返回的原文**或任务里的失败原因，而不是你自己的转述。改过的地方请标注。
+      render: text
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ## 提交前确认
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 请逐条勾选
+      options:
+        - label: 上面三关**都真的跑过**，不是凭印象填的
+          required: true
+        - label: 日志 / 截图里的 API Key、Cookie、订单号、真实商品链接签名参数、个人信息已全部替换或打码
+          required: true
+        - label: 我确认这个 Bug **不是**登录墙、验证码、403/429、权限拒绝导致的 —— 那些是设计上的停止行为，不是缺陷
+          required: true
+        - label: 我搜过现有 Issue，没有重复
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        > **不要在本 Issue 里贴真实 API Key。** 已经贴了请立刻去服务商后台吊销 —— 即使你随后删掉了评论或 Issue，它也已经进过别人的通知和镜像。
+        >
+        > 安全问题请走 [私密漏洞报告](https://github.com/LZM2023/dsh-sofa-monitor/security/advisories/new)，不要开公开 Issue。

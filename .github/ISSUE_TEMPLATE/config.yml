@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 安全漏洞
+    url: https://github.com/LZM2023/dsh-sofa-monitor/security/advisories/new
+    about: 请走私密漏洞报告，不要开公开 Issue。详见 SECURITY.md。
+  - name: 📖 先看前置要求与已知限制
+    url: https://github.com/LZM2023/dsh-sofa-monitor#前置要求先看这个
+    about: 大部分「装不上 / 采集没反应」都能在这里找到答案，不用开 Issue。

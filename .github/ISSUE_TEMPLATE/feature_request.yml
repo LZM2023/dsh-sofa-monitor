@@ -1,0 +1,58 @@
+name: ✨ 功能建议
+description: 想要新平台适配、新导出格式、更好的识图效果，或改掉某个烦人的地方。
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提之前先看一眼 [已知限制](https://github.com/LZM2023/dsh-sofa-monitor#已知限制) —— 有些东西不是没做，是刻意不做（比如验证码识别、风控对抗、把间隔改成秒级）。
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 想改哪一块
+      options:
+        - 采集（读取参数 / 选图 / 详情核对）
+        - 规格卡（排版 / 模板 / 导出格式）
+        - 归档与去重（目录 / CSV / 索引）
+        - 图片处理（云端 / ComfyUI / 无）
+        - 平台适配（淘宝 / 天猫 / 小红书 / 其他）
+        - 安装与配置体验
+        - 文档
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 现在哪里不好用
+      description: 说清你实际的处境，不要只写「希望支持 X」。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 你希望它变成什么样
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative
+    attributes:
+      label: 现在你怎么绕过这个问题
+      description: 了解绕行方式能证明这个需求是真的痛，而不是想象出来的。
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 请确认
+      options:
+        - label: 这个需求不涉及绕过平台访问控制（验证码识别、登录态伪造、代理轮换、风控对抗）
+          required: true
+        - label: 我搜过现有 Issue，没有重复
+          required: true
