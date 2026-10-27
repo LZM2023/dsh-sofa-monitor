@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "mode": "cloud",
+  "cloud": {
+    "url": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+    "model": "qwen-image-2.1-turbo",
+    "apiKey": "请替换为你自己的 API Key，推荐改用环境变量 QWEN_API_KEY"
+  },
+  "comfy": {
+    "url": "http://127.0.0.1:8188"
+  }
+}

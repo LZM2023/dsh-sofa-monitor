@@ -1,0 +1,47 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 打包产物
+*.tgz
+*.tar.gz
+dist/
+
+# 真实商品素材（绝不提交：含平台版权图、真实 SKU、真实到手价）
+# 插件运行时会把演示/预览用到的商品图落在 assets/cards/，这不属于源码
+assets/cards/
+work/
+
+# 运行时数据（绝不提交：含真实商品图、采集资料、归档卡片）
+.sofa-monitor/
+SofaMonitor-outputs/
+SofaMonitor-*/
+outputs/
+product-tasks/
+collection-index.json
+capture-checkpoint.json
+
+# 密钥与本地配置（绝不提交）
+*-private.json
+qwen-private.json
+image-processing-private.json
+.env
+.env.*
+*.pem
+*.key
+
+# 本地产出
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+
+# 本地调试残留
+tmp/
+temp/
+.cache/

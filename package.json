@@ -1,0 +1,78 @@
+{
+  "name": "dsh-sofa-monitor",
+  "version": "0.1.50",
+  "description": "DSH 插件：京东沙发商品自动采集、详情图核对与产品规格卡（PNG + 可编辑 PPTX）归档",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "sofa",
+    "spec-card",
+    "ecommerce",
+    "scraper",
+    "pptx"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LZM2023/dsh-sofa-monitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LZM2023/dsh-sofa-monitor/issues"
+  },
+  "homepage": "https://github.com/LZM2023/dsh-sofa-monitor#readme",
+  "engines": {
+    "node": "^22.19.0 || >=24"
+  },
+  "main": "lib/index.mjs",
+  "exports": {
+    ".": "./lib/index.mjs",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "assets",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "docs/RELEASE-NOTES.md",
+    "!docs/screenshots",
+    "examples",
+    "scripts"
+  ],
+  "scripts": {
+    "check": "node scripts/check-syntax.mjs",
+    "pack:check": "npm pack --dry-run"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-session",
+        "@deepseek-ai/dsh-client-ui-workspace"
+      ]
+    },
+    "compatibility": {
+      "dsh": ">=0.2.1-rc.2"
+    }
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "1.0.12",
+    "jszip": "3.10.1",
+    "pptxgenjs": "4.0.1"
+  },
+  "sofaMonitor": {
+    "minimumBackendVersion": "0.1.48"
+  },
+  "overrides": {
+    "image-size": "2.0.3"
+  }
+}

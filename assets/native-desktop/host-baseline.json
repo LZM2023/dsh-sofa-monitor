@@ -1,0 +1,7 @@
+{
+  "hostVersion": "2.0.18-beta.1",
+  "files": {
+    "preload.cjs": "b3dc937fc681a97d93414896e2df7b29840ea4eb1e6429cb8d1e4fc143d5f300",
+    "electron-runtime-CwsBYtJ_.js": "de9af8be9457ad48804bf8e25f02730b2664659bc64bfdf762743fc3c4887849"
+  }
+}

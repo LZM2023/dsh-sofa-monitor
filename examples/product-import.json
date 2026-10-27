@@ -1,0 +1,13 @@
+{
+  "rightsConfirmed": false,
+  "products": [
+    {
+      "title": "格式示例：请替换为你有权使用的真实商品名称",
+      "brand": "请填写品牌",
+      "model": "",
+      "platform": "tmall",
+      "sourceUrl": "https://detail.tmall.com/item.htm?id=请替换为真实商品ID",
+      "specs": { "材质": "请填写原始资料中的材质", "尺寸": "请填写原始资料中的尺寸" }
+    }
+  ]
+}
